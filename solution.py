@@ -12,7 +12,7 @@ def solution(x: np.array, y: np.array) -> bool:
     def statistic(x, y, axis):
         return np.mean(x, axis=axis) - np.mean(y, axis=axis)
 
-    pvalue = stats.permutation_test([x, y], statistic, alternative='less').pvalue
+    pvalue = permutation_test([x, y], statistic, alternative='less').pvalue
 
     if pvalue <= alpha:
         is_rejected = True
