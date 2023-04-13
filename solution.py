@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from scipy import stats
+from scipy.stats import permutation_test
 
 
 chat_id = 230790372 # Ваш chat ID, не меняйте название переменной
@@ -9,7 +9,10 @@ chat_id = 230790372 # Ваш chat ID, не меняйте название пе�
 def solution(x: np.array, y: np.array) -> bool:
     alpha = 0.05
 
-    _, pvalue = stats.ttest_ind(x, y, alternative='less')
+    def statistic(x, y, axis):
+        return np.mean(x, axis=axis) - np.mean(y, axis=axis)
+
+    pvalue = stats.permutation_test([x, y], statistic, alternative='less').pvalue
 
     if pvalue <= alpha:
         is_rejected = True
